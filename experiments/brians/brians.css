@@ -1,0 +1,13 @@
+#canvas {
+    border: 1px solid black;
+}
+
+.info-box {
+    border: 1px solid black;
+    width: 20em;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    font-family: Helvetica, Arial;
+}
