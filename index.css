@@ -1,0 +1,35 @@
+#canvas {
+    display: none;
+}
+
+.about-box {
+    position: relative;
+    top: 160px;
+    left: 450px;
+
+    width: 375px;
+    height: 150px;
+
+    background-color: rgba(140,140,140,0.5);
+    border: 1px solid #f8f8f8;
+    border-radius: 4px;
+
+    font-family: 'HelveticaNeue', Helvetica, Arial;
+    color: #f8f8f8;
+    text-align: center;
+}
+
+.about-box h1 {
+    text-transform: uppercase;
+    font-weight: normal;
+    letter-spacing: 2px;
+}
+
+.about-box p {
+    color: #c8c8c8;
+}
+
+.about-box a {
+    color: #f8f8f8;
+    text-decoration: none;
+} 
