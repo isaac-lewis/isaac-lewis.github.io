@@ -26,17 +26,17 @@ window.onload = function() {
     }
 
     window.onkeydown = function(evt) {
-	if(evt.keyCode === 38) {
+	if(evt.keyCode === 88) {
 	    GLOBAL.speed *= 0.667;
-	} else if(evt.keyCode === 40) {
+	} else if(evt.keyCode === 90) {
 	    GLOBAL.speed *= 1.5;
-	} else if(evt.keyCode === 87) {
+	} else if(evt.keyCode === 87 || evt.keyCode === 38) {
 	    GLOBAL.ball.y -= 1;
-	} else if(evt.keyCode === 65) {
+	} else if(evt.keyCode === 65 || evt.keyCode === 37) {
 	    GLOBAL.ball.x -= 1;
-	} else if(evt.keyCode === 83) {
+	} else if(evt.keyCode === 83 || evt.keyCode === 40) {
 	    GLOBAL.ball.y += 1;
-	} else if(evt.keyCode === 68) {
+	} else if(evt.keyCode === 68 || evt.keyCode === 39) {
 	    GLOBAL.ball.x += 1;
 	}
 
