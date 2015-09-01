@@ -1,0 +1,17 @@
+#bg {
+    display: none;
+}
+
+#hint {
+    background-color: rgba(140,140,140,0.5);
+    border: 1px solid #f8f8f8;
+    border-radius: 4px;
+
+    padding: 5px;
+
+    font-family: 'HelveticaNeue', Helvetica, Arial;
+    color: #f8f8f8;
+    text-align: center;
+
+    width: 100px;
+}

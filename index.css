@@ -5,7 +5,7 @@
 .about-box {
     position: relative;
     top: 160px;
-    left: 450px;
+    margin: 0 auto;
 
     width: 375px;
     height: 150px;
@@ -26,10 +26,32 @@
 }
 
 .about-box p {
-    color: #c8c8c8;
+    color: #d0d0d0;
 }
 
 .about-box a {
     color: #f8f8f8;
     text-decoration: none;
 } 
+
+#portfolio-box {
+    display: none;
+}
+
+#hint {
+    position: fixed;
+    left: 10;
+    bottom: 10;
+
+    background-color: rgba(140,140,140,0.5);
+    border: 1px solid #f8f8f8;
+    border-radius: 4px;
+
+    padding: 5px;
+
+    font-family: 'HelveticaNeue', Helvetica, Arial;
+    color: #f8f8f8;
+    text-align: center;
+
+    width: 100px;
+}
