@@ -1,0 +1,208 @@
+body {
+    padding-top: 0px;
+    margin-top: 0px;
+    color: #2f4b66;
+    font-size: 14px;
+}
+
+.top-navbar {
+    background-color: #535c70;
+    color: #eaf0f0;
+    height: 70px;
+    border-bottom: 1px solid #bacef0;
+}
+
+.navbar-brand {
+    padding: 5px 15px;
+}
+
+.navbar-brand img {
+    height: 54px;
+}
+
+.top-navbar li {
+    height: 54px;
+}
+
+.top-navbar li a:hover {
+    background-color: #333c50;
+}
+
+.top-navbar li a:visited {
+    background-color: #333c50;
+}
+
+.top-navbar li a {
+    font-size: 18px;
+    font-weight: lighter;
+    color: #eaf0f0;
+    padding: 24px 25px;
+    letter-spacing: 1px;
+}
+
+#fractal-box {
+    padding: 50px 0 70px;
+    margin-bottom: 70px;
+    background-color: #2e3341;
+    color: #eaf0f0;
+}
+
+#fractal-box h1, #fractal-box h2, #fractal-box .big-logo {
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#fractal-box .big-logo {
+    margin-top: 100px;
+    height: 240px;
+}
+
+#fractal-box h1 {
+    font-weight: normal;
+    font-size: 72px;
+    letter-spacing: 2px;
+}
+
+#fractal-box h2 {
+    font-size: 48px;
+    font-weight: lighter;
+    letter-spacing: 2px;
+    line-height: 72px;
+}
+
+.solutions-box {
+    padding-top: 25px;
+    background-color: #3c4352;
+    padding-bottom: 80px;
+    color: #eaf0f0;
+}
+
+.solutions-box .squares-icon {
+    margin-top: 95px;
+    margin-bottom: 35px;
+}
+
+.solutions-box img {
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.container p {
+    font-size: 21px;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    line-height: 28px;
+}
+
+.blue-box p {
+    color: #eaf0f0;
+}
+
+.grey-text {
+}
+
+.green-header {
+    color: #eaf0f0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 44px;
+    font-size: 28px;
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+.blue-bar {
+    background-color: #3c4352;
+    color: #eaf0f0;
+    overflow: visible;
+    padding: 20px 0 20px;
+}
+
+.process-box {
+    background: url("../img/fractal_tree.png") #3c4352 no-repeat;
+    background-size: 45%;
+    background-position: left bottom;
+    height: 615px;
+}
+
+.process-box h2, .about-box h2 {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 44px;
+    font-size: 28px;
+    margin-bottom: 22px;
+    color: #eaf0f0;
+}
+
+.about-box h2 {
+    margin-bottom: 35px;
+}
+
+.process-box .row {
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+
+.process-box .row p {
+    margin-top: 12px;
+}
+
+.white-bar {
+    padding: 20px 0 20px;
+}
+
+.case-studies-box {
+    background-color: #3c4352;
+    padding-top: 40px;
+    padding-bottom: 80px;
+    border-bottom: 1px solid #2c3342;
+}
+
+.case-studies-box h2 {
+    color: #eaf0f0;
+    margin-bottom: 50px;
+}
+
+.case-studies-box h3 {
+    color: #eaf0f0;
+    letter-spacing: 1px;
+    line-height: 44px;
+    font-size: 23px;
+    margin-bottom: 22px;
+    padding-left: 15px;
+}
+
+.case-studies-box p {
+    color: #eaf0f0;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.wrap {
+    padding: 20px;    
+}
+
+.text-center {
+    text-align: center;
+}
+
+.label-info {
+    background-color: #1abc9c !important;
+}
+
+.input-row {
+    margin-bottom: 16px;
+}
+
+.input-label {
+    text-align: right;
+    position: relative;
+    top: -8px;
+}
+
+#canvas {
+    display: none;
+}
