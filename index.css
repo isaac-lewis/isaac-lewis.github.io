@@ -10,25 +10,27 @@
     width: 375px;
     height: 150px;
 
-    background-color: rgba(50,50,50,0.65);
+    background-color: rgba(50,50,50,0.8);
     border: 1px solid #f8f8f8;
     border-radius: 4px;
     padding: 16px;
 
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: lighter;
+    letter-spacing: 1px;
     color: #f8f8f8;
     text-align: center;
 }
 
 .about-box h1 {
     text-transform: uppercase;
-    font-weight: normal;
+    font-weight: lighter;
     letter-spacing: 2px;
 }
 
 .about-box h2 {
     text-transform: uppercase;
-    font-weight: normal;
+    font-weight: lighter;
     letter-spacing: 1px;
     font-size: 93.5%;
     color: #f8f8f8;
@@ -58,7 +60,7 @@
 } 
 
 .about-box .back-link {
-    margin-top: 32px;
+    margin-top: 30px;
     text-align: right;
     font-size: 90%;
 }
