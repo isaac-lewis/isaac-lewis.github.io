@@ -57,8 +57,8 @@ var selectCa = function(pcolor, prule) {
 
 	mazectric: {survival: [1,2,3,4,5],
 		    birth: [3],
-		    restartCycle: 130,
-		    initialDensity: 0.05},
+		    restartCycle: 225,
+		    initialDensity: 0.03},
 
 	briansbrain: {states: 3,
 		      birth: [2],
