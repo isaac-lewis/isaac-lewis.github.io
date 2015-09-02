@@ -1,20 +1,21 @@
-#canvas {
+#bg {
     display: none;
 }
 
 .about-box {
     position: relative;
-    top: 160px;
+    top: 120px;
     margin: 0 auto;
 
     width: 375px;
     height: 150px;
 
-    background-color: rgba(140,140,140,0.5);
+    background-color: rgba(50,50,50,0.65);
     border: 1px solid #f8f8f8;
     border-radius: 4px;
+    padding: 16px;
 
-    font-family: 'HelveticaNeue', Helvetica, Arial;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     color: #f8f8f8;
     text-align: center;
 }
@@ -25,17 +26,42 @@
     letter-spacing: 2px;
 }
 
+.about-box h2 {
+    text-transform: uppercase;
+    font-weight: normal;
+    letter-spacing: 1px;
+    font-size: 93.5%;
+    color: #f8f8f8;
+}
+
+.about-box .portfolio-header {
+    margin-bottom: 10px;
+}
+
+.about-box .experiments-header {
+    margin-top: 30px;
+}
+
 .about-box p {
-    color: #d0d0d0;
+    color: #d8d8d8;
 }
 
 .about-box a {
     color: #f8f8f8;
     text-decoration: none;
+    font-size: 100%;
 } 
+
+.about-box .back-link {
+    margin-top: 32px;
+    text-align: right;
+    font-size: 90%;
+}
+
 
 #portfolio-box {
     display: none;
+    height: 380px;
 }
 
 #hint {
