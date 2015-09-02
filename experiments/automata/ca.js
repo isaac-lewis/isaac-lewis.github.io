@@ -53,16 +53,25 @@ var selectCa = function(pcolor, prule) {
 	replicator: {survival: [1,3,5,7],
 		     birth: [1,3,5,7],
 		     initialDensity: 0.002,
-		     restartCycle: 30},
+		     restartCycle: 25},
 
 	mazectric: {survival: [1,2,3,4,5],
 		    birth: [3],
-		    restartCycle: 225,
+		    restartCycle: 200,
 		    initialDensity: 0.035},
 
 	briansbrain: {states: 3,
 		      birth: [2],
-		      restartCycle: 500}
+		      restartCycle: 500},
+	
+	gnarl: {survival: [1],
+		birth: [1],
+		initialDensity: 0.0005,
+		restartCycle: 30},
+
+	walledcities:  {survival: [2,3,4,5],
+			    birth: [4,5,6,7,8],
+			   initialDensity: 0.25},
     }
 
     var randomItem = function(obj) {
@@ -209,5 +218,5 @@ var selectCa = function(pcolor, prule) {
     init();
 }
 
-window.onload = selectCa('pomegranate','mazectric');
+window.onload = selectCa('ralphLauren','mazectric');
 
