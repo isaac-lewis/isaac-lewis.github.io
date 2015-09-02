@@ -209,5 +209,5 @@ var selectCa = function(pcolor, prule) {
     init();
 }
 
-window.onload = selectCa('ralphLauren','mazectric');
+window.onload = selectCa('pomegranate','mazectric');
 
