@@ -1,5 +1,12 @@
 var timeout;
 
+var stopCa = function() {
+    clearTimeout(timeout);
+    var canvas = document.getElementById("bg");
+    var ctx = canvas.getContext("2d");
+    
+}
+
 var selectCa = function(pcolor, prule) {
     clearTimeout(timeout);
 
@@ -177,7 +184,7 @@ var selectCa = function(pcolor, prule) {
     }
 
     var drawState = function(state) {
-	ctx.clearRect(0,0,300,300);
+	ctx.clearRect(0,0,canvas.height,canvas.width);
 
 	for(var i = 0; i < numRows; i++) {
 	    for(var j = 0; j < numCols; j++) {

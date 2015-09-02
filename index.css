@@ -2,80 +2,8 @@
     display: none;
 }
 
-.about-box {
-    position: relative;
-    top: 120px;
-    margin: 0 auto;
 
-    width: 375px;
-    height: 150px;
-
-    background-color: rgba(50,50,50,0.75);
-    border: 1px solid #f8f8f8;
-    border-radius: 4px;
-    padding: 16px;
-
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: lighter;
-    letter-spacing: 1px;
-    color: #f8f8f8;
-    text-align: center;
-}
-
-.about-box h1 {
-    text-transform: uppercase;
-    font-weight: lighter;
-    letter-spacing: 2px;
-}
-
-.about-box h2 {
-    text-transform: uppercase;
-    font-weight: lighter;
-    letter-spacing: 1px;
-    font-size: 93.5%;
-    color: #f8f8f8;
-}
-
-.about-box h1 {
-    margin-top: 10px;
-    margin-bottom: 25px;
-}
-
-.about-box .experiments-header {
-    margin-top: 30px;
-}
-
-.about-box-links {
-    margin-top: 25px;
-}
-
-.about-box p {
-    color: #d8d8d8;
-}
-
-.about-box a {
-    color: #f8f8f8;
-    text-decoration: none;
-    font-size: 100%;
-} 
-
-.about-box .back-link {
-    margin-top: 30px;
-    text-align: right;
-    font-size: 90%;
-}
-
-
-#portfolio-box {
-    display: none;
-    height: 380px;
-}
-
-#hint {
-    position: fixed;
-    left: 10;
-    bottom: 10;
-
+.grey-box {
     background-color: rgba(50,50,50,0.75);
     border: 1px solid #f8f8f8;
     border-radius: 4px;
@@ -85,7 +13,80 @@
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: lighter;
     color: #f8f8f8;
+    letter-spacing: 1px;
     text-align: center;
+}
 
-    width: 100px;
+.about-box {
+    position: relative;
+    top: 120px;
+    margin: 0 auto;
+
+    width: 375px;
+    height: 150px;
+    padding: 16px;
+}
+
+#portfolio-box {
+    display: none;
+    height: 380px;
+}
+
+.grey-box h1 {
+    text-transform: uppercase;
+    font-weight: lighter;
+    letter-spacing: 2px;
+}
+
+.grey-box h2 {
+    text-transform: uppercase;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    font-size: 93.5%;
+    color: #f8f8f8;
+}
+
+.grey-box h1 {
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.grey-box .experiments-header {
+    margin-top: 30px;
+}
+
+.grey-box-links {
+    margin-top: 25px;
+}
+
+.grey-box p {
+    color: #d8d8d8;
+}
+
+.grey-box a {
+    color: #f8f8f8;
+    text-decoration: none;
+    font-size: 100%;
+} 
+
+.grey-box .back-link {
+    margin-top: 30px;
+    text-align: right;
+    font-size: 90%;
+}
+
+.clickme {
+    position: fixed;
+    left: 10;
+    top: 10;
+
+    width: 120px;
+}
+
+.stawp {
+    position: fixed;
+    left: 150;
+    top: 10;
+
+    width: 120px;
 }
