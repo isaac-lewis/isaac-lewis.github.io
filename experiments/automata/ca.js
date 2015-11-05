@@ -195,7 +195,7 @@ var selectCa = function(pcolor, prule) {
 	    }
 	}
 
-	document.body.style.background = "url(" + canvas.toDataURL() + ")";
+	// document.body.style.background = "url(" + canvas.toDataURL() + ")";
     }
 
     var getColor = function(cellVal) {
