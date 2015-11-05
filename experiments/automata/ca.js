@@ -230,3 +230,14 @@ var selectCa = function(pcolor, prule) {
 
 window.onload = selectCa('ralphLauren','mazectric');
 
+// when resizing, refresh animation within 0.5 seconds, but
+// check no other refreshes are scheduled
+
+var resizeTimeout;
+window.addEventListener('resize', function() {
+    stopCa();
+    window.clearTimeout(resizeTimeout);
+    resizeTimeout = window.setTimeout(function() {selectCa()}, 500);
+});
+
+
