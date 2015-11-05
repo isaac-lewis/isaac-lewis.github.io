@@ -184,7 +184,7 @@ var selectCa = function(pcolor, prule) {
     }
 
     var drawState = function(state) {
-	ctx.clearRect(0,0,canvas.height,canvas.width);
+	// ctx.clearRect(0,0,canvas.height,canvas.width);
 
 	for(var i = 0; i < numRows; i++) {
 	    for(var j = 0; j < numCols; j++) {
