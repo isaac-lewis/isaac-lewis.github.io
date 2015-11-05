@@ -77,16 +77,16 @@
 
 .clickme {
     position: fixed;
-    left: 10;
-    top: 10;
+    left: 10px;
+    top: 10px;
 
     width: 120px;
 }
 
 .stawp {
     position: fixed;
-    left: 150;
-    top: 10;
+    left: 150px;
+    top: 10px;
 
     width: 120px;
 }
