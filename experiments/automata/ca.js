@@ -17,12 +17,16 @@ var selectCa = function(pcolor, prule) {
     var state;
     var oldState;
 
-    var numRows = 100;
-    var numCols = 100;
-    var cellSize = 4;
+    var height = window.innerHeight;
+    var width = window.innerWidth;
+
+    var cellSize = 6;
+    var numRows = Math.ceil(height / cellSize);
+    var numCols = Math.ceil(width / cellSize);
 
     canvas.height = numRows * cellSize;
     canvas.width = numCols * cellSize;
+    console.log(numRows, numCols);
 
     var colorSchemes = {
 	pinks: {
@@ -184,14 +188,13 @@ var selectCa = function(pcolor, prule) {
     }
 
     var drawState = function(state) {
-	// ctx.clearRect(0,0,canvas.height,canvas.width);
+	ctx.clearRect(0,0,canvas.height,canvas.width);
 
 	for(var i = 0; i < numRows; i++) {
 	    for(var j = 0; j < numCols; j++) {
 		var cellVal = state[i][j];
 		ctx.fillStyle = getColor(cellVal);
-		ctx.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
-
+		ctx.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
 	    }
 	}
 
