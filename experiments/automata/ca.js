@@ -78,7 +78,7 @@ var selectCa = function(pcolor, prule) {
 
 	walledcities:  {survival: [2,3,4,5],
 			    birth: [4,5,6,7,8],
-			   initialDensity: 0.25},
+			   initialDensity: 0.25}
     }
 
     var randomItem = function(obj) {
