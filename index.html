@@ -109,9 +109,9 @@
       </div>
 
       <p>
-	<a href="#" onclick="gallery.init()">Freelancing</a>
+	<a href="#" onclick="openGallery()">Freelancing</a>
 	&#8728;
-	Since 2015 I've worked on a variety of freelance/contract projects. <a href="#" onclick="gallery.init()">See Portfolio</a>
+	Since 2015 I've worked on a variety of freelance/contract projects. <a href="#" onclick="openGallery()">See Portfolio</a>
       </p>
 
       <p>
@@ -139,11 +139,11 @@
 	<a href="experiments/brians/brians.html">Life of Brian</a> &#8728;
 	<a href="experiments/planet/islands/index.html">Planet</a>
       </p>
-    </div>
 
-    <p  class="back-link">
-      <a href="#" onclick="closePortfolio()">Back</a>
-    </p>
+      <p class="back-link">
+	<a href="#" onclick="closePortfolio()">Back</a>
+      </p>
+    </div>
 
     <canvas width="0" height="0" id="bg"></canvas>
 
@@ -208,7 +208,10 @@
       };
 
       // Initializes and opens PhotoSwipe
-      var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+      var openGallery = function {
+          var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+	  gallery.init();
+      }
     </script>
   </body>
 </html>
