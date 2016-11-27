@@ -15,7 +15,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/fractal.css" rel="stylesheet">
+    <link href="css/fractal2.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -34,7 +34,7 @@
       <div class="container-fluid">
 	<div class="navbar-header">
 	  <a class="navbar-brand" href="/">
-            <img alt="Brand" src="img/logo_small.png">
+            <img alt="Brand" src="img/logo_big.png">
 	  </a>
 
 	  <ul class="nav navbar-nav">
@@ -51,42 +51,47 @@
 	<canvas id="canvas" width="900" height="600"></canvas>
 
         <img alt="fractal logo" class="big-logo" src="img/logo_big.png">
-        <h1>Fractal</h1>
+        <h1><span class="grey-bg">Fractal</span></h1>
         <h2 class="intro-content">
-	  Boutique Managed Advertising
+	  <span class="grey-bg">
+	    Boutique Managed Advertising
+	    <br/>
+	    (scroll down!)
+	  </span>
         </h2>
       </div>
     </div>
 
-    <div class="container solutions-box" id="solutions">
-      <div class="text-center">
-	<img class="squares-icon" alt="squares icon" src="img/bridge.png">
+    <div class="solutions-box" id="solutions">
+      <div class="container">
+	<div class="text-center">
+	  <div class="row">
+	    <div class="col-md-6 col-md-offset-3">
+	      <img alt="bluestacks logo" height="180" src="img/bridge.png">
 
-	<div class="row">
-	  <div class="col-md-6 col-md-offset-3">
-	    <h2 class="green-header">Bridging the art of creative and data science</h2>
-	  </div>
-        </div>
+	      <h2 class="green-header">Bridging the art of creative and data science</h2>
+	    </div>
+          </div>
 
-	<div class="row">
-	  <div class="col-md-6 col-md-offset-3">
-	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et commodo eros, quis mattis odio. Proin eleifend facilisis hendrerit.</p>
-	  </div>
-        </div>
+	  <div class="row">
+	    <div class="col-md-6 col-md-offset-3">
+	      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et commodo eros, quis mattis odio. Proin eleifend facilisis hendrerit.</p>
+	    </div>
+          </div>
 
-	<img class="graph-icon" alt="graph icon" src="img/solutions.png">
+	  <div class="row">
+	    <div class="col-md-6 col-md-offset-3">
+	      <img alt="bluestacks logo" height="180" src="img/solutions.png">
+	      <h2 class="green-header">Solutions</h2>
+	    </div>
+          </div>
 
-	<div class="row">
-	  <div class="col-md-6 col-md-offset-3">
-	    <h2 class="green-header">Solutions</h2>
-	  </div>
-        </div>
-
-	<div class="row" id="process">
-	  <div class="col-md-6 col-md-offset-3">
-	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et commodo eros, quis mattis odio. Proin eleifend facilisis hendrerit.</p>
-	  </div>
-        </div>
+	  <div class="row" id="process">
+	    <div class="col-md-6 col-md-offset-3">
+	      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et commodo eros, quis mattis odio. Proin eleifend facilisis hendrerit.</p>
+	    </div>
+          </div>
+	</div>
       </div>
     </div>
 
@@ -99,78 +104,91 @@
 	</div>
 
 	<div class="row">
-	  <div class="col-md-3 col-md-offset-7">
+	  <div class="col-md-4 col-md-offset-3">
 	    <p>You integrate with our platform</p>
 	  </div>
 	  <div class="col-md-1">
-	    <img src="img/point1.png">
+	    <img height="55" src="img/bluestacks_logo.png">
 	  </div>
 	</div>
 
 	<div class="row">
-	  <div class="col-md-3 col-md-offset-7">
+	  <div class="col-md-4 col-md-offset-3">
 	    <p>You define your marketing goals</p>
 	  </div>
 	  <div class="col-md-1">
-	    <img src="img/point2.png">
+	    <img height="85" src="img/1.png">
 	  </div>
 	</div>
 
 	<div class="row">
-	  <div class="col-md-3 col-md-offset-7">
+	  <div class="col-md-4 col-md-offset-3">
 	    <p>We study and identify your core audiences</p>
 	  </div>
 	  <div class="col-md-1">
-	    <img src="img/point3.png">
+	    <img height="85" src="img/2.png">
 	  </div>
 	</div>
 
 	<div class="row">
-	  <div class="col-md-3 col-md-offset-7">
+	  <div class="col-md-4 col-md-offset-3">
 	    <p>We make creatives targeted to those audiences</p>
 	  </div>
 	  <div class="col-md-1">
-	    <img src="img/point4.png">
+	    <img height="85" src="img/3.png">
 	  </div>
 	</div>
 
 	<div class="row">
-	  <div class="col-md-3 col-md-offset-7">
+	  <div class="col-md-4 col-md-offset-3">
 	    <p>We optimise to meet your goals</p>
 	  </div>
 	  <div class="col-md-1">
-	    <img src="img/point5.png">
+	    <img height="85" src="img/4.png">
 	  </div>
 	</div>
       </div>
     </div>
 
-    <div class="container case-studies-box" id="casestudies">
-      <h2 class="green-header">Case Studies</h2>
+    <div class="case-studies-box" id="casestudies">
+      <div class="container">
+	<h2 class="green-header">Case Studies</h2>
 
-      <div class="row">
-	<div class="col-md-4">
-	  <h3>Case Study #1</h3>
-	  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et commodo eros, quis mattis odio. Proin eleifend facilisis.</p>
+	<div class="row">
+	  <div class="col-md-4">
+	    <h3>Case Study #1</h3>
+	  </div>
+
+	  <div class="col-md-4">
+	    <h3>Case Study #2</h3>
+	  </div>
+
+	  <div class="col-md-4">
+	    <h3>Case Study #3</h3>
+	  </div>
 	</div>
 
-	<div class="col-md-4">
-	  <h3>Case Study #2</h3>
-	  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et commodo eros, quis mattis odio. Proin eleifend facilisis.</p>
-	</div>
+	<div class="row">
+	  <div class="col-md-4">
+	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et commodo eros, quis mattis odio. Proin eleifend facilisis.</p>
+	  </div>
 
-	<div class="col-md-4">
-	  <h3>Case Study #3</h3>
-	  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et commodo eros, quis mattis odio. Proin eleifend facilisis.</p>
+	  <div class="col-md-4">
+	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et commodo eros, quis mattis odio. Proin eleifend facilisis.</p>
+	  </div>
+
+	  <div class="col-md-4">
+	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et commodo eros, quis mattis odio. Proin eleifend facilisis.</p>
+	  </div>
 	</div>
       </div>
     </div>
 
-    <div class="blue-bar about-box" id="about">
+    <div class="blue-bar about-box">
       <div class="container">
 	<div class="row">
 	  <div class="col-md-6 col-md-offset-3">
-	    <h3>About Us</h3>
+	    <h2>About Us</h2>
 	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et commodo eros, quis mattis odio. Proin eleifend facilisis hendrerit.</p></div>
 	</div>
       </div>
@@ -179,6 +197,6 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
 
-    <script src="js/mandy.js"></script>
+    <script src="js/fractal_tree.js"></script>
   </body>
 </html>
