@@ -37,14 +37,6 @@
     width: 540px;
 }
 
-#old-projects {
-    display: none;
-}
-
-#recent-projects {
-    display: block;
-}
-
 .grey-box h1 {
     text-transform: uppercase;
     font-weight: lighter;

@@ -3,6 +3,8 @@
   <head>
     <title>Isaac Lewis | Frontend Web Developer</title>
     <link href="index.css" rel="stylesheet">
+    <link href="photoswipe.css" rel="stylesheet">
+    <link href="default-skin/default-skin.css" rel="stylesheet">
   </head>
 
   <body>
@@ -38,48 +40,175 @@
 
     <div class="grey-box about-box" id="portfolio-box">
       <h1 class="portfolio-header">Portfolio</h1>
-      <h2><a href="#" onclick="showRecent()">Recent Projects</a> &#8728; <a href="#" onclick="showOld()">Old Projects</a></h2>
 
-      <div id="recent-projects">
-	things!
+      <div id="portfolio">
+	<!-- Root element of PhotoSwipe. Must have class pswp. -->
+	<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+	  <!-- Background of PhotoSwipe.
+               It's a separate element as animating opacity is faster than rgba(). -->
+	  <div class="pswp__bg"></div>
+
+	  <!-- Slides wrapper with overflow:hidden. -->
+	  <div class="pswp__scroll-wrap">
+
+            <!-- Container that holds slides.
+		 PhotoSwipe keeps only 3 of them in the DOM to save memory.
+		 Don't modify these 3 pswp__item elements, data is added later on. -->
+            <div class="pswp__container">
+              <div class="pswp__item"></div>
+              <div class="pswp__item"></div>
+              <div class="pswp__item"></div>
+            </div>
+
+            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+
+              <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                  <div class="pswp__preloader__icn">
+                    <div class="pswp__preloader__cut">
+                      <div class="pswp__preloader__donut"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+              </div>
+
+              <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+              </button>
+
+              <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+              </button>
+
+              <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+              </div>
+
+            </div>
+
+	  </div>
+
+	</div>
       </div>
 
-      <div id="old-projects">
-	<p>
-	  <a href="https://www.boardintelligence.co.uk/products/boardIq">BoardIQ</a>
-	  &#8728;
-	  I wrote the web-based components for BoardIQ, an app for managing board reports that is used by the corporate boards of several FTSE 100 companies and private equity firms.
-	</p>
+      <p>
+	<a href="#" onclick="gallery.init()">Freelancing</a>
+	&#8728;
+	Since 2015 I've worked on a variety of freelance/contract projects. <a href="#" onclick="gallery.init()">See Portfolio</a>
+      </p>
 
-	<p>
-	  <a href="https://github.com/isaac-lewis/FYP">Poker AI</a>
-	  &#8728;
-	  My Bachelor's thesis, an AI that plays Texas Holdem poker. It uses the <i>miximix</i> algorithm (a modified version of minimax), and predicts opponent actions using different machine learning classifiers.
-	</p>
+      <p>
+	<a href="https://www.boardintelligence.co.uk/products/boardIq">BoardIQ</a>
+	&#8728;
+	I wrote the web-based components for BoardIQ, an app for managing board reports that is used by the corporate boards of several FTSE 100 companies and private equity firms.
+      </p>
 
-	<p>
-	  <a href="https://shintolin.com">Shintolin</a>
-	  &#8728;
-	  A browser-based multiplayer game set in the Stone Age. Players can hunt, craft items and build villages. I wrote the initial version in 2009 and it was recently revived by a fan.
-	</p>
+      <p>
+	<a href="https://github.com/isaac-lewis/FYP">Poker AI</a>
+	&#8728;
+	My Bachelor's thesis, an AI that plays Texas Holdem poker. It uses the <i>miximix</i> algorithm (a modified version of minimax), and predicts opponent actions using different machine learning classifiers.
+      </p>
+
+      <p>
+	<a href="https://shintolin.com">Shintolin</a>
+	&#8728;
+	A browser-based multiplayer game set in the Stone Age. Players can hunt, craft items and build villages. I wrote the initial version in 2009 and it was recently revived by a fan.
+      </p>
 
 
-	<h2 class="experiments-header">Experiments</h2>
-	<p>
-	  <a href="experiments/fractal/index.html">Fractal</a> &#8728;
-	  <a href="experiments/brians/brians.html">Life of Brian</a> &#8728;
-	  <a href="experiments/planet/islands/index.html">Planet</a>
-	</p>
-      </div>
-
-      <p  class="back-link">
-      <a href="#" onclick="closePortfolio()">Back</a>
+      <h2 class="experiments-header">Experiments</h2>
+      <p>
+	<a href="experiments/fractal/index.html">Fractal</a> &#8728;
+	<a href="experiments/brians/brians.html">Life of Brian</a> &#8728;
+	<a href="experiments/planet/islands/index.html">Planet</a>
       </p>
     </div>
+
+    <p  class="back-link">
+      <a href="#" onclick="closePortfolio()">Back</a>
+    </p>
 
     <canvas width="0" height="0" id="bg"></canvas>
 
     <script src="experiments/automata/ca.js"></script>
-    <script src="cellular.js"></script>
+    <script src="js/cellular.js"></script>
+    <script src="js/photoswipe.min.js"></script>
+    <script src="js/photoswipe-ui-default.min.js"></script>
+    <script type="text/javascript">
+      var pswpElement = document.querySelectorAll('.pswp')[0];
+
+      // build items array
+      var items = [
+	  {
+	      src: 'portfolio/PWC_design.png',
+	      w: 850,
+	      h: 450,
+	      title: 'Admin app for an accounting firm.'
+	  },
+	  {
+	      src: 'portfolio/Haggle_dashboard.png',
+	      w: 850,
+	      h: 450,
+	      title: 'Analytics dashboard for an e-commerce company. ReactJS'
+	  },
+	  {
+	      src: 'portfolio/Emoquo_dashboard.png',
+	      w: 800,
+	      h: 500,
+	      title: 'Analytics dashboard for a coaching company.'
+	  },
+	  {
+	      src: 'portfolio/MP_dashboard.png',
+	      w: 850,
+	      h: 450,
+	      title: 'Analytics dashboard for a VC firm.'
+	  },
+	  {
+	      src: 'portfolio/BCL_dashboard.png',
+	      w: 900,
+	      h: 450,
+	      title: 'Analytics dashboard for an e-learning company. ReactJS'
+	  },
+	  {
+	      src: 'portfolio/BCL_2.png',
+	      w: 850,
+	      h: 450,
+	      title: 'CMS for an e-learning company. ReactJS'
+	  },
+	  {
+	      src: 'portfolio/boardiq.png',
+	      w: 880,
+	      h: 480,
+	      title: 'Admin interface for BoardIQ, a board reporting app. AngularJS'
+	  }
+      ];
+
+      // define options (if needed)
+      var options = {
+      // optionName: 'option value'
+      // for example:
+      index: 0 // start at first slide
+      };
+
+      // Initializes and opens PhotoSwipe
+      var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+    </script>
   </body>
 </html>
