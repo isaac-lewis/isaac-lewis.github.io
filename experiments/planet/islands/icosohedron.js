@@ -1,40 +1,127 @@
-var faces, terrainRnd, cratonSize, rowCol, rowSize, craton, row, col, foldedCol, split, coords, neigbours, n1, n2, n3;
+// TODO - check value of declaring vars at top of file
 
-function iToCoords(i, subdivision) {
-    cratonSize = subdivision * subdivision;
-    rowCol = (i % cratonSize);
-    craton = (i - rowCol) / cratonSize;
+var faces, terrainRnd, cratonSize, rowCol, rowSize, craton, row, col, foldedCol, split, coords, n1, n2, n3,
+faceSize, tileIdxInFace, faceIdx, rowIdx, rawColIdx, colIdx, rowAndColIdx, randomIdx, neighbourFaceIdx, neighbourCoordsArray;
+
+/* SIZE/LOCATION FUNCTIONS */
+
+var numTilesInRow = function(rowIdx) {
+    return (2 * rowIdx) + 1;
+}
+
+var numTilesOnPlanet = function(vertexLength) {
+    return vertexLength * vertexLength * 20;
+}
+
+var isEven = function(n) {
+    return n % 2 === 0;
+}
+
+var isColIdxTooHigh = function(colIdx, rowIdx) {
+    return colIdx >= numTilesInRow(rowIdx) - 1;
+}
+
+var isRowIdxTooHigh = function(rowIdx, vertexLength) {
+    return rowIdx >= vertexLength - 1;
+}
+
+var isPolarFace = function(faceIdx) {
+    return faceIdx <= 4 || faceIdx >= 15;
+}
+
+var randomTile = function(vertexLength) {
+    randomIdx = randInt(vertexLength * vertexLength * 20)
+    return convertIdxToCoords(randomIdx, vertexLength);
+}
+
+/* CONVERSION FUNCTIONS */
+
+var convertTileIdxToRowColIdx = function(tileIdxInFace) {
+    // convert tileIdxInFace to rowIdx, rawColIdx
+    rowIdx = Math.floor(Math.sqrt(tileIdxInFace));
+    rawColIdx = tileIdxInFace - (rowIdx * rowIdx);
+
+    // "fold over" rawColIdx value
+    if(rawColIdx <= rowIdx) {
+	colIdx = rawColIdx * 2;
+    } else {
+	colIdx = (((rawColIdx - rowIdx) -1) * 2) + 1;
+    }
+
+    return [rowIdx, colIdx];
+}
+
+var convertRowColIdxToTileIdx = function(rowIdx, colIdx, vertexLength) {
+    // "unfold" colIdx value
+    if(colIdx % 2 == 0) {
+	rawColIdx = colIdx / 2;
+    } else {
+	rawColIdx = (((colIdx - 1) / 2) + 1) + rowIdx;
+    }
+
+    // check values are valid
+    if(rowIdx >= vertexLength || rawColIdx > numTilesInRow(rowIdx) - 1) {
+	return false;
+    } else {
+	return (rowIdx * rowIdx) + rawColIdx;
+    }
+}
+
+var convertIdxToCoords = function(idx, vertexLength) {
+    faceSize = vertexLength * vertexLength;
+    tileIdxInFace = (idx % faceSize);
+    faceIdx = (idx - tileIdxInFace) / faceSize;
     
-    // convert rowCol to row, col
-    row = Math.floor(Math.sqrt(rowCol));
-    col = rowCol - (row * row);
+    rowAndColIdx = convertTileIdxToRowColIdx(tileIdxInFace);
 
-    // "fold over" col value
-    if(col <= row) { foldedCol = col * 2; }
-    else { foldedCol = (((col - row) -1) * 2) + 1; }
-
-    return [craton, row, foldedCol];
+    return [faceIdx, rowAndColIdx[0], rowAndColIdx[1]];
 }
 
-function coordsToI(coords, subdivision) {
-    // need check that coords are valid
-    craton = coords[0];
-    row = coords[1];
-    foldedCol = coords[2];
 
-    if(foldedCol % 2 == 0) { col = foldedCol / 2; } 
-    else { col = (((foldedCol - 1) / 2) + 1) + row; }
+var convertCoordsToIdx = function(coords, vertexLength) {
+    // need to check that coords are valid
+    faceIdx = coords[0];
+    rowIdx = coords[1];
+    colIdx = coords[2];
 
-    if(row >= subdivision || col > rowLength(row) - 1) { return false; }
-    else { return (craton * subdivision * subdivision) + (row * row) + col; }
+    tileIdxInFace = convertRowColIdxToTileIdx(rowIdx, colIdx, vertexLength);
+
+    if(tileIdxInFace === false) {
+	return false;
+    } else {
+	return (faceIdx * vertexLength * vertexLength) + tileIdxInFace;
+    }
 }
 
-function rowLength(row) {
-    return (2*row) + 1;
+/* VERTICES FUNCTIONS  */ 
+
+var verticesMatch = function(v1, v2) {
+    var match = true;
+    v1.forEach(function(c,i) {
+	if(c !== v2[i]) match = false;
+    });
+
+    return match;
 }
 
-// red=0, green=1, blue=2
-function neighbourOfCraton(source, color) {
+// different names 'case we change the API later on
+var polygonContainsVertice = function(polygon, v1) {
+    return arrayContainsVertice(polygon, v1);
+}
+
+var arrayContainsVertice = function(array, v1) {
+    return array.find(function(v2) {
+	return verticesMatch(v1, v2);
+    });
+}
+
+
+var HIGH_ROW_SIDE = 0; // side where row > max
+var LOW_COL_SIDE = 1; // side where col < 0
+var HIGH_COL_SIDE = 2; // side where col > max
+
+// direction = BASE_SIDE / LEFT_SIDE / RIGHT_SIDE
+var neighbourOfFace = function(faceIdx, direction) {
     return [
 	[5,4,1],
 	[6,0,2],
@@ -59,231 +146,70 @@ function neighbourOfCraton(source, color) {
 	[12,18,16],
 	[13,19,17],
 	[14,15,18]
-    ][source][color];
+    ][faceIdx][direction];
 }
 
-// 0th = green (locol), 1st blue (hicol), 2nd red (hirow OR lorow)
-function neighboursOfCoords(coords, subdivision) {
-    craton = coords[0], row = coords[1], col = coords[2];
-    neighbours = [];
+var neighboursOfIdx = function(idx, vertexLength) {
+    neighbourCoordsArray = neighboursOfCoords(convertIdxToCoords(idx, vertexLength), vertexLength);
 
-    // add n1
-    if(col > 0) { 
-	neighbours.push([craton, row, col-1]);
+    return neighbourCoordsArray.map(function(neighbourCoords) {
+	return convertCoordsToIdx(neighbourCoords, vertexLength);
+    });
+}
+
+var neighboursOfCoords = function(coords, vertexLength) {
+    faceIdx = coords[0], rowIdx = coords[1], colIdx = coords[2];
+
+    // add n1: "colIdx - 1" neighbour
+    if(colIdx > 0) { 
+	n1 = [faceIdx, rowIdx, colIdx - 1];
+
     } else {
-	// cross the green line
-	if(craton <= 4 || craton >= 15) 
-	    neighbours.push([neighbourOfCraton(craton, 1),
-			     row,
-			     rowLength(row)-1]);
+	// cross the LOW_COL_SIDE line
+	neighbourFaceIdx = neighbourOfFace(faceIdx, LOW_COL_SIDE);
+
+	if(isPolarFace(faceIdx)) 
+	    n1 = [neighbourFaceIdx, rowIdx, numTilesInRow(rowIdx) - 1];
 	else 
-	    neighbours.push([neighbourOfCraton(craton, 1),
-			     subdivision-row-1,
-			     0]);
+	    n1 = [neighbourFaceIdx, vertexLength - rowIdx - 1, 0];
     }
 
-    // add n2
-    if(col < rowLength(row) - 1) { 
-	neighbours.push([craton, row, col+1]);
+
+    // add n2: "colIdx + 1" neighbour
+    if(!isColIdxTooHigh(colIdx, rowIdx)) { 
+	n2 = [faceIdx, rowIdx, colIdx + 1];
+
     } else {
-	// cross the blue line
-	if(craton <= 4 || craton >= 15) 
-	    neighbours.push([neighbourOfCraton(craton, 2),
-			     row,
-			     0]);
+	// cross the HIGH_COL_SIDE line
+	neighbourFaceIdx = neighbourOfFace(faceIdx, HIGH_COL_SIDE);
+
+	if(isPolarFace(faceIdx)) 
+	    n2 = [neighbourFaceIdx, rowIdx, 0];
 	else 
-	    neighbours.push([neighbourOfCraton(craton, 2),
-			     subdivision-row-1,
-			     rowLength(subdivision-row-1)-1]);
+	    n2 = [neighbourFaceIdx,
+		  vertexLength - rowIdx - 1,
+		  numTilesInRow(vertexLength - rowIdx - 1) - 1];
     }
     
-    // add n3
-    if(col % 2 == 0) {
-	if(row < subdivision - 1) {
-	    neighbours.push([craton, row+1, col+1]);
+    // add n3: "adjacent row" neighbour
+    if(isEven(colIdx)) {
+	if(isRowIdxTooHigh(rowIdx, vertexLength)) {
+
+	    // cross the HIGH_ROW_SIDE line
+	    n3 = [neighbourOfFace(faceIdx, HIGH_ROW_SIDE),
+			     vertexLength - 1, 
+			     numTilesInRow(rowIdx) - colIdx - 1];
 
 	} else {
-	    // cross the red line
-	    neighbours.push([neighbourOfCraton(craton, 0),
-			     subdivision-1, 
-			     rowLength(row)-col-1]);
+	    n3 = [faceIdx, rowIdx + 1, colIdx + 1];
 	}
+
     } else {
-	if(row > 0) {
-	    neighbours.push([craton, row-1, col-1]);
-	}
+	// note - if colIdx is odd, rowIdx cannot be 0, so we can safely assume rowIdx > 0
+	n3 = [faceIdx, rowIdx - 1, colIdx - 1];
     }
 
-    return neighbours;
-}
-
-function neighboursOfI(i, n) {
-    return neighboursOfCoords(iToCoords(i,n),n).map(function(c) {
-	return coordsToI(c,n);
-    });
-}
-
-function verticesMatch(v1, v2) {
-    var match = true;
-    v1.forEach(function(c,i) {
-	if(c !== v2[i]) match = false;
-    });
-
-    return match;
-}
-
-// different names 'case we change the API later on
-function polygonContainsVertice(polygon, v1) {
-    return arrayContainsVertice(polygon, v1);
-}
-
-function arrayContainsVertice(array, v1) {
-    return array.find(function(v2) {
-	return verticesMatch(v1, v2);
-    });
-}
-
-// a face 'i' is the vertex between 3 different hexes
-// given an i, returns an array of 3 arrays of 6 tiles
-
-// more efficient tack: make use of the neighbours function
-// always returning neighbours in particular order
-
-
-function allHexes(n) {
-    var hexesCache = {}, hexes = [];
-    var hash;
-
-    for(var i = 0; i < isocTriangles(n); i++) {
-	hexesAroundI(i,n).forEach(function(hex) {
-	    hash = hexHash(hex, n);
-	    if(hexesCache[hash] === undefined) {
-		hexesCache[hash] = true;
-		hexes.push(hex);
-	    }
-	});
-    }
-
-    return hexes;
-}
-
-function hexesAroundI(i, n) {
-
-    coords = iToCoords(i, n);
-    ns = neighboursOfCoords(coords, n);
-
-    // for each trio of neighbouring tiles, 
-    // find the other 3 tiles to complete the hex
-
-    var neighbourTrio = [[ns[0],coords,ns[1]],
-			  [ns[0],coords,ns[2]],
-			  [ns[1],coords,ns[2]]];
-
-    var hexes = neighbourTrio.map(function(trio) {
-	return trioToHex(trio, n);
-    });
-
-    return hexes;
+    return [n1, n2, n3];
 }
 
 
-// easiest way
-// take the 0th and 2nd elements in trio (1st is 'center')
-// find their neighbours (subneighbours)
-// find *their* neighbours (subsubneighbours)
-// the subsubneighbour duplicate is the 5th tile
-// it's two parents are the 3rd and 4th
-// if there's a crossover, it's a pentagon
-
-function trioToHex(trio, n) {
-    var hex1 = trio[0], hex2 = trio[1], hex3 = trio[2];
-    var h1subs = neighboursOfCoords(hex1, n).filter(function(sub) {
-	return !verticesMatch(sub, hex2); });
-    var h3subs = neighboursOfCoords(hex3, n).filter(function(sub) {
-	return !verticesMatch(sub, hex2); });
-
-    if(h1subs.length !== 2 || h3subs.length !== 2) return; // summats wrong
-
-    var h1subsubs = _.flatten(h1subs.map(function(s) { 
-	return neighboursOfCoords(s, n).filter(function(sub) {
-	    return !verticesMatch(sub, hex1);
-	});
-    }), true);
-
-    var h3subsubs = _.flatten(h3subs.map(function(s) {
-	return neighboursOfCoords(s, n).filter(function(sub) {
-	    return !verticesMatch(sub, hex3);
-	});
-    }), true);
-
-    if(h1subsubs.length !== 4 || h3subsubs.length !== 4) return; // summats wrong
-
-    var crossI1, crossI3, hex4, hex5, hex6;
-    
-    // now find the crossover...
-    crossI1 = _.findIndex(h1subsubs, function(ss1) {
-	crossI3 = _.findIndex(h3subsubs, function(ss3) {
-	    return verticesMatch(ss1,ss3);
-	});
-
-	if(crossI3 !== -1) return true;
-    });
-
-    // it's a pentagon!
-    if(crossI1 === -1 && crossI3 === -1) {
-	crossI1 = _.findIndex(h1subsubs, function(ss1) {
-	    crossI3 = _.findIndex(h3subs, function(s3) {
-		return verticesMatch(ss1,s3);
-	    });
-	    
-	    if(crossI3 !== -1) return true;
-	});
-
-	if(crossI1 <= 1) hex4 = h1subs[0];
-	else hex4 = h1subs[1];
-
-	hex5 = h3subs[crossI3];
-	return [hex1,hex2,hex3,hex5,hex4];
-    }
-
-    // then find the parents...
-    if(crossI1 <= 1) hex4 = h1subs[0];
-    else hex4 = h1subs[1];
-
-    if(crossI3 <= 1) hex6 = h3subs[0];
-    else hex6 = h3subs[1];
-
-    hex5 = h1subsubs[crossI1];
-    return [hex1,hex2,hex3,hex6,hex5,hex4];
-}
-
-function isocTriangles(n) {
-    return n * n * 20;
-}
-
-function hexHash(hex,n) {
-    var size = isocTriangles(n);
-
-    var canonical = hex.map(function(v) {
-	return coordsToI(v,n);
-    }).sort();
-    return size*size*canonical[0] + size*canonical[1] + canonical[2];
-}
-
-function uniqueVertices(polygons) {
-    var allVertices = _.flatten(polygons, true);
-    var uniqs = [];
-
-    allVertices.forEach(function(v) {
-	if(!polygonContainsVertice(uniqs, v)) {
-	    uniqs.push(v);
-	}
-	console.log(uniqs.length);
-    });
-
-    return uniqs;
-}
-
-function randomTile(subdivision) {
-    return iToCoords(randInt(subdivision*subdivision*20),subdivision);
-}
