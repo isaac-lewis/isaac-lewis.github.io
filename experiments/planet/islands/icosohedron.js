@@ -29,9 +29,13 @@ var isPolarFace = function(faceIdx) {
     return faceIdx <= 4 || faceIdx >= 15;
 }
 
+var randomTileIdx = function(vertexLength) {
+    return (randInt(19) * (vertexLength * vertexLength))
+	+ randInt(vertexLength * vertexLength);
+}
+
 var randomTile = function(vertexLength) {
-    randomIdx = randInt(vertexLength * vertexLength * 20)
-    return convertIdxToCoords(randomIdx, vertexLength);
+    return convertIdxToCoords(randomTileIdx(vertexLength), vertexLength);
 }
 
 /* CONVERSION FUNCTIONS */
@@ -213,3 +217,6 @@ var neighboursOfCoords = function(coords, vertexLength) {
 }
 
 
+var neighbourOfTileInDirection = function(tileCoords, direction, vertexLength) {
+    return neighboursOfCoords(tileCoords, vertexLength)[direction];
+}
