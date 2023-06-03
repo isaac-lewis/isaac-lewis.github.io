@@ -140,7 +140,7 @@ export class Organism {
 
             blood *= 0.034;
 
-            if(this instanceof Herbivore) blood *= 0.8;
+            if(this instanceof Herbivore) blood *= 1.33;
 
             this.size += 0.95 * blood;
             organism.size -= blood;
