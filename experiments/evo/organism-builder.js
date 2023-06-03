@@ -40,15 +40,15 @@ export class OrganismBuilder {
 
     newHerbivore(oldProperties) {
         let properties = oldProperties || this.generateProperties();
-        properties.color = [185, 113, 191];
-        properties.interiorColor = [215, 143, 221];
+        properties.color = [99, 41, 136];
+        properties.interiorColor = [129, 61, 166];
         return new Herbivore(properties);
     }
 
     newCarnivore(oldProperties) {
         let properties = oldProperties || this.generateProperties();
-        properties.color = [128, 3, 42];
-        properties.interiorColor = [148, 23, 62];
+        properties.color = [179, 58, 11];
+        properties.interiorColor = [120, 40, 10];
         return new Carnivore(properties);
     }
 }

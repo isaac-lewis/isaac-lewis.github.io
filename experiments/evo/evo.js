@@ -27,7 +27,7 @@ function drawOrganism(organism) {
     ctx.arc(organism.x, organism.y, 3 * Math.sqrt(organism.size), 0, Math.PI * 2, true);
     ctx.fillStyle = `rgb(${organism.interiorColor[0]}, ${organism.interiorColor[1]}, ${organism.interiorColor[2]})`;
     ctx.fill();
-    ctx.lineWidth = 6;
+    ctx.lineWidth = Math.sqrt(organism.size);
     ctx.strokeStyle = `rgb(${organism.color[0]}, ${organism.color[1]}, ${organism.color[2]})`;
     ctx.stroke();
 
