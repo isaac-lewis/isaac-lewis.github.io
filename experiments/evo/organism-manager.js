@@ -29,7 +29,7 @@ export class OrganismManager {
 
     reproduce(organism) {
         // console.log('repoducing', this.size());
-        if(organism instanceof Plant && this.size() > 400 && Math.random() > (1 / Math.pow(this.size() - 400, 0.78))) {
+        if(organism instanceof Plant && this.size() > 500 && Math.random() > (1 / Math.pow(this.size() - 500, 0.45))) {
            return false;
         }
 

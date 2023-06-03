@@ -211,7 +211,7 @@ export class Herbivore extends Organism {
 
     move() {
         if(this.size > 60) this.size *= 0.986;
-        else this.size -= 0.038 + (0.012 * Math.log10(this.speed + 1)) + (0.006 * Math.log10(this.wiggleAmplitude + 1));
+        else this.size -= 0.038 + (0.012 * Math.log10(this.speed + 1)) + (0.0008 * this.wiggleAmplitude);
 
         if(this.size <= 3) {
             this.die();
@@ -225,7 +225,7 @@ export class Carnivore extends Organism {
 
     move() {
         if(this.size > 60) this.size *= 0.986;
-        else this.size -= 0.038 + (0.012 * Math.log10(this.speed + 1)) + (0.006 * Math.log10(this.wiggleAmplitude + 1));
+        else this.size -= 0.062 + (0.024 * Math.log10(this.speed + 1)) + (0.0012 * this.wiggleAmplitude);
 
         if(this.size <= 3) {
             this.die();
