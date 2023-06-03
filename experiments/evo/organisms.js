@@ -88,11 +88,18 @@ export class Organism {
             this.target = null;
         }
 
+        if(this.hunter) {
+            this.direction = this.directionOf(this.x, this.y, this.hunter.x, this.hunter.y) + Math.PI;
+            this.moveLinear();
+            return;
+        }
+
         if(!this.target) {
             const neighbours = this.constructor.manager.getEdibleNearbyOrganisms(this, {orderByNearest: true});
 
             if(neighbours.length > 0) {
                 this.target = randomSelect(neighbours);
+                this.target.hunter = this;
             }
         }
 
@@ -151,7 +158,7 @@ export class Organism {
             this.wiggleRadius *= logNormalScalingFactor(1.5);
             this.maximumSize *= logNormalScalingFactor(1.24);
             this.mutationRate *= logNormalScalingFactor(2);
-            if(Math.random() < 0.2) {
+            if(Math.random() < 0.24) {
                 this.movementPattern = randomSelect(['wiggle', 'random', 'chase']);
             }
 

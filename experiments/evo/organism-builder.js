@@ -8,7 +8,7 @@ export class OrganismBuilder {
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
             size: Math.random() * 10 + 5,
-            speed: Math.random() * 1.2,
+            speed: Math.random() * 2.5,
             movementPattern: randomSelect(['wiggle', 'random', 'chase']),
             wiggleAmplitude: Math.random() * 10,
             wiggleRadius: Math.random() * 2,
@@ -32,7 +32,7 @@ export class OrganismBuilder {
 
     newPlant(oldProperties) {
         let properties = oldProperties || this.generateProperties();
-        properties.speed *= 0.62;
+        properties.speed *= 0.38;
         properties.color = [19, 99, 1];
         properties.interiorColor = [49, 129, 31];
         return new Plant(properties);
