@@ -152,7 +152,7 @@ export class Organism {
             this.maximumSize *= logNormalScalingFactor(1.24);
             this.mutationRate *= logNormalScalingFactor(2);
             if(Math.random() < 0.2) {
-                this.movementPattern = ['wiggle', 'random'][Math.floor(Math.random() * 2)];
+                this.movementPattern = randomSelect(['wiggle', 'random', 'chase']);
             }
 
             // Mutate each color component
