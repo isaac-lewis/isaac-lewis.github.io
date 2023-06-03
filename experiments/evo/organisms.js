@@ -159,8 +159,13 @@ export class Organism {
             let newR = mutateColorValue(this.color[0]);
             let newG = mutateColorValue(this.color[1]);
             let newB = mutateColorValue(this.color[2]);
+            // Mutate each color component again
+            let newIR = mutateColorValue(newR);
+            let newIG = mutateColorValue(newG);
+            let newIB = mutateColorValue(newB);
 
             this.color = [newR, newG, newB];
+            this.interiorColor = [newIR, newIG, newIB];
         }
     }
 }
@@ -211,7 +216,7 @@ export class Herbivore extends Organism {
 
     move() {
         if(this.size > 60) this.size *= 0.986;
-        else this.size -= 0.038 + (0.012 * Math.log10(this.speed + 1)) + (0.0008 * this.wiggleAmplitude);
+        else this.size -= 0.038 + (0.012 * Math.log10(this.speed + 1)) + (0.006 * this.wiggleAmplitude);
 
         if(this.size <= 3) {
             this.die();
@@ -225,7 +230,7 @@ export class Carnivore extends Organism {
 
     move() {
         if(this.size > 60) this.size *= 0.986;
-        else this.size -= 0.062 + (0.024 * Math.log10(this.speed + 1)) + (0.0012 * this.wiggleAmplitude);
+        else this.size -= 0.062 + (0.024 * Math.log10(this.speed + 1)) + (0.004 * this.wiggleAmplitude);
 
         if(this.size <= 3) {
             this.die();

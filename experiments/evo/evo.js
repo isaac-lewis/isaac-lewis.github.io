@@ -23,16 +23,20 @@ function drawEnvironment() {
 
 function drawOrganism(organism) {
     if(organism.size <= 0) return;
-    ctx.fillStyle = `rgb(${organism.color[0]}, ${organism.color[1]}, ${organism.color[2]})`;
     ctx.beginPath();
     ctx.arc(organism.x, organism.y, 3 * Math.sqrt(organism.size), 0, Math.PI * 2, true);
+    ctx.fillStyle = `rgb(${organism.interiorColor[0]}, ${organism.interiorColor[1]}, ${organism.interiorColor[2]})`;
     ctx.fill();
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = `rgb(${organism.color[0]}, ${organism.color[1]}, ${organism.color[2]})`;
+    ctx.stroke();
 
     if(organism.target) {
         // Draw a line from this organism to its target
         ctx.beginPath();
         ctx.moveTo(organism.x, organism.y);
         ctx.lineTo(organism.target.x, organism.target.y);
+        ctx.lineWidth = 2;
         ctx.strokeStyle = "white";
         ctx.stroke();
     }

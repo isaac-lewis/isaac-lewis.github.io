@@ -34,18 +34,21 @@ export class OrganismBuilder {
         let properties = oldProperties || this.generateProperties();
         properties.speed *= 0.62;
         properties.color = [19, 99, 1];
+        properties.interiorColor = [49, 129, 31];
         return new Plant(properties);
     }
 
     newHerbivore(oldProperties) {
         let properties = oldProperties || this.generateProperties();
         properties.color = [185, 113, 191];
+        properties.interiorColor = [215, 143, 221];
         return new Herbivore(properties);
     }
 
     newCarnivore(oldProperties) {
         let properties = oldProperties || this.generateProperties();
         properties.color = [128, 3, 42];
+        properties.interiorColor = [148, 23, 62];
         return new Carnivore(properties);
     }
 }
