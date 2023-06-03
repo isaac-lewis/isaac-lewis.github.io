@@ -27,6 +27,15 @@ function drawOrganism(organism) {
     ctx.beginPath();
     ctx.arc(organism.x, organism.y, 3 * Math.sqrt(organism.size), 0, Math.PI * 2, true);
     ctx.fill();
+
+    if(organism.target) {
+        // Draw a line from this organism to its target
+        ctx.beginPath();
+        ctx.moveTo(organism.x, organism.y);
+        ctx.lineTo(organism.target.x, organism.target.y);
+        ctx.strokeStyle = "white";
+        ctx.stroke();
+    }
 }
 
 function update() {

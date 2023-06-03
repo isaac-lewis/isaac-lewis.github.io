@@ -20,20 +20,20 @@ export class OrganismManager {
     }
 
     remove(organism) {
+        this.mapGrid.removeFromCell(organism);
         const index = this.organisms.indexOf(organism);
         if (index > -1) {
             this.organisms.splice(index, 1);
-            this.mapGrid.removeFromCell(organism);
         }
     }
 
     reproduce(organism) {
         // console.log('repoducing', this.size());
-        if(this.size() > 400 && Math.random() > (1 / Math.pow(this.size() - 400, 0.63))) {
+        if(organism instanceof Plant && this.size() > 400 && Math.random() > (1 / Math.pow(this.size() - 400, 0.78))) {
            return false;
         }
 
-        let properties = { ...organism, size: organism.size / 2 - (Math.random() * 2) };
+        let properties = { ...organism, size: organism.size / 2 - (Math.random() * 2), target: null };
 
         let offspring, offspringType;
         if(organism instanceof Plant) {
@@ -52,6 +52,9 @@ export class OrganismManager {
 
         offspring.mutate();
 
+        offspring.x += (Math.random() * 10 - 5);
+        offspring.y += (Math.random() * 10 - 5);
+
         return true;
     }
 
@@ -69,12 +72,12 @@ export class OrganismManager {
         });
 
         herbivores.forEach(herbivore => {
-            let edibleNeighbours = this.getEdibleNearbyOrganisms(herbivore);
+            let edibleNeighbours = this.getEdibleNearbyOrganismsInContact(herbivore);
             herbivore.eat(edibleNeighbours);
         });
 
         carnivores.forEach(carnivore => {
-            let edibleNeighbours = this.getEdibleNearbyOrganisms(carnivore);
+            let edibleNeighbours = this.getEdibleNearbyOrganismsInContact(carnivore);
             carnivore.eat(edibleNeighbours);
         });
 
@@ -83,17 +86,20 @@ export class OrganismManager {
 
             // Update the map grid
             this.ensureOnCanvas(organism);
-            this.mapGrid.removeFromCell(organism);
+
+            const removed = this.mapGrid.removeFromCell(organism);
             this.mapGrid.addToCell(organism);
 
             organism.reproduce();
         });
 
+        this.mapGrid.removeDead();
+
         this.randomlySpawnOrganisms();
     }
 
     randomlySpawnOrganisms() {
-        if(Math.random() < (0.12) && this.size() < 21) {
+        if(Math.random() < (0.12) && this.size() < 81) {
             console.log('spawn');
             this.addRandomOrganism();
         }
@@ -118,7 +124,7 @@ export class OrganismManager {
 
     addHerbivore(oldProperties = null) {
         let newO = this.organismBuilder.newHerbivore(oldProperties);
-        this.add(newO); 
+        this.add(newO);
         return newO;
     }
 
@@ -148,22 +154,33 @@ export class OrganismManager {
         return this.organisms.filter(organism => organism instanceof Carnivore);
     }
 
-    getNearbyOrganisms(organism) {
-        return this.mapGrid.getNearbyOrganisms(organism);
+    getNearbyOrganisms(organism, opts = {orderByNearest: false}) {
+        let nearbyOrganisms = this.mapGrid.getNearbyOrganisms(organism);
+        if(opts.orderByNearest) {
+            nearbyOrganisms.sort((o1, o2) => this.mapGrid.distance(organism, o1) - this.mapGrid.distance(organism, o2));
+        }
+
+        return nearbyOrganisms;
     }
 
-    getEdibleNearbyOrganisms(organism) {
-        const nearbyOrganisms = this.mapGrid.getNearbyOrganisms(organism);
+    getEdibleNearbyOrganisms(organism, opts = {orderByNearest: false}) {
+        const nearbyOrganisms = this.mapGrid.getNearbyOrganisms(organism, opts);
 
-        if(nearbyOrganisms.length > 1) {
-            return nearbyOrganisms.filter(neighbour => {
-                return (neighbour !== organism) &&
-                ((organism instanceof Herbivore && neighbour instanceof Plant) ||
-                (organism instanceof Carnivore && neighbour instanceof Herbivore)) &&
-                this.mapGrid.inContact(organism, neighbour);
-            });
-        } else {
-            return [];
-        }
+        return nearbyOrganisms.filter(neighbour => {
+            return (neighbour !== organism) &&
+            ((organism instanceof Herbivore && neighbour instanceof Plant) ||
+            (organism instanceof Carnivore && neighbour instanceof Herbivore))
+        });
+    }
+
+    getEdibleNearbyOrganismsInContact(organism, opts = {orderByNearest: false}) {
+        const nearbyOrganisms = this.mapGrid.getNearbyOrganisms(organism, opts);
+
+        return nearbyOrganisms.filter(neighbour => {
+            return (neighbour !== organism) &&
+            ((organism instanceof Herbivore && neighbour instanceof Plant) ||
+            (organism instanceof Carnivore && neighbour instanceof Herbivore)) &&
+            this.mapGrid.inContact(organism, neighbour);
+        });
     }
 }

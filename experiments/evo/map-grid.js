@@ -27,11 +27,30 @@ export class MapGrid {
 
     // Removes an organism from its current cell
     removeFromCell(organism) {
-        let cell = organism.cell || this.getCell(organism);
+        let cell = organism.cell;
         let index = cell.indexOf(organism);
         if (index !== -1) {
             cell.splice(index, 1);
+            return true;
         }
+    }
+
+    removeDead(organism) {
+        this.grid.forEach((row, i) => {
+            row.forEach((cell, j) => {
+                cell.forEach((organism, idx) => {
+                    if(organism.dead) cell.splice(idx, 1);
+                });
+            });
+        });
+    }
+
+    totalOrganisms() {
+        return this.grid.reduce((total, row) => {
+            return total + row.reduce((rowTotal, cell) => {
+                return rowTotal + cell.length;
+            }, 0);
+        }, 0);
     }
 
     // Returns an array of organisms in the cells neighboring the given position
@@ -55,11 +74,14 @@ export class MapGrid {
         return organisms;
     }
 
-    inContact(organism1, organism2) {
+    distance(organism1, organism2) {
         const dx = organism1.x - organism2.x;
         const dy = organism2.y - organism2.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+        return Math.sqrt(dx * dx + dy * dy);
+    }
 
-        return distance < 3 * (Math.sqrt(organism1.size) + Math.sqrt(organism2.size));
+    inContact(organism1, organism2) {
+        const dist = this.distance(organism1, organism2);
+        return dist < 3 * (Math.sqrt(organism1.size) + Math.sqrt(organism2.size));
     }
 }

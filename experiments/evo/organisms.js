@@ -1,4 +1,4 @@
-import { logNormalScalingFactor, mutateColorValue } from './utils.js';
+import { logNormalScalingFactor, mutateColorValue, randomSelect } from './utils.js';
 
 export class Organism {
     static manager;
@@ -23,6 +23,8 @@ export class Organism {
             case 'wiggle':
                 this.moveWiggle();
                 break;
+            case 'chase':
+                this.moveChase();
             // Add more cases for different movement patterns
             default:
                 this.moveLinear();
@@ -76,7 +78,38 @@ export class Organism {
         this.y += this.speed * Math.sin(this.direction) + Math.random() * this.wiggleAmplitude - this.wiggleAmplitude / 2;
     }
 
+    moveChase() {
+        if(this instanceof Plant) {
+            this.moveRandom();
+            return;
+        }
+
+        if(this.target && this.target.dead) {
+            this.target = null;
+        }
+
+        if(!this.target) {
+            const neighbours = this.constructor.manager.getEdibleNearbyOrganisms(this, {orderByNearest: true});
+
+            if(neighbours.length > 0) {
+                this.target = randomSelect(neighbours);
+            }
+        }
+
+        if(this.target) {
+            this.direction = this.directionOf(this.x, this.y, this.target.x, this.target.y);
+            this.moveLinear();
+        } else {
+            this.moveRandom();
+        }
+    }
+
+    directionOf(x1, y1, x2, y2) {
+        return Math.atan2(y2 - y1, x2 - x1);
+    }
+
     die() {
+        this.dead = true;
         this.constructor.manager.remove(this);
     }
 
@@ -159,7 +192,7 @@ export class Plant extends Organism {
 
     eat(plantBiomass, sunlightFactor, neighbourCount) {
         if(plantBiomass > 50_000 || neighbourCount > 20) {
-            this.size -= 0.01;
+            // this.size -= 0.01;
         } else {
             let growth = 0.3;
             if(plantBiomass > 30_000) growth *= 1 - ((plantBiomass - 30_000) / 20_000);
@@ -192,7 +225,7 @@ export class Carnivore extends Organism {
 
     move() {
         if(this.size > 60) this.size *= 0.986;
-        else this.size -= 0.064 + (0.024 * Math.log10(this.speed + 1)) + (0.006 * Math.log10(this.wiggleAmplitude + 1));
+        else this.size -= 0.038 + (0.012 * Math.log10(this.speed + 1)) + (0.006 * Math.log10(this.wiggleAmplitude + 1));
 
         if(this.size <= 3) {
             this.die();

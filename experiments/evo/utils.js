@@ -22,9 +22,13 @@ export function sunlightFactor() {
     let seconds = currentTime.getSeconds() + (60 * currentTime.getMinutes()); // Total seconds since the hour began
     let sunlightFactor = 0.05 + (1 + Math.sin(2 * Math.PI * seconds / 84)); // Sine varies from -1 to 1, so adjust it to vary from 0 to 1
 
-    return sunlightFactor;
+    return 2;  // sunlightFactor;
 }
 
 export function forceIntoRange(val, min, max) {
     return Math.max(min, Math.min(max, val));
+}
+
+export function randomSelect(optionsArray) {
+    return optionsArray[Math.floor(Math.random() * optionsArray.length)];
 }
