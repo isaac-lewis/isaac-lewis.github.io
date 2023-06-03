@@ -93,7 +93,7 @@ export class OrganismManager {
     }
 
     randomlySpawnOrganisms() {
-        if(Math.random() < (0.12) && this.size() < 1) {
+        if(Math.random() < (0.12) && this.size() < 21) {
             console.log('spawn');
             this.addRandomOrganism();
         }
