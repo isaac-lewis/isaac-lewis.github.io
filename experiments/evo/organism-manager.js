@@ -38,6 +38,7 @@ export class OrganismManager {
         let offspring, offspringType;
         if(organism instanceof Plant) {
             offspringType = coinFlip("p", "h", 0.988);
+            if(offspringType === "h") properties.speed = Math.random() * 2.5; // reverse plant slowdown
         } else if (organism instanceof Herbivore) {
             offspringType = coinFlip("h", "c", 0.988);
         } else {

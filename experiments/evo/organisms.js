@@ -8,7 +8,6 @@ export class Organism {
 
         this.speed = Math.max(0.1, properties.speed);
         this.direction = Math.random() * Math.PI * 2;
-        this.curveRadius = 40; // Adjust this value as desired
     }
 
     move() {
