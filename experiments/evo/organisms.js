@@ -8,6 +8,7 @@ export class Organism {
 
         this.speed = Math.max(0.1, properties.speed);
         this.direction = Math.random() * Math.PI * 2;
+        this.age = 0;
     }
 
     move() {
@@ -29,6 +30,8 @@ export class Organism {
                 this.moveLinear();
                 break;
         }
+
+        this.age += 1;
     }
 
     moveLinear() {
@@ -87,7 +90,7 @@ export class Organism {
             this.target = null;
         }
 
-        if(this.hunter) {
+        if(this.hunter && !this.hunter.dead) {
             this.direction = this.directionOf(this.x, this.y, this.hunter.x, this.hunter.y) + Math.PI;
             this.moveLinear();
             return;
@@ -120,6 +123,8 @@ export class Organism {
     }
 
     eat(edibleNeighbours) {
+        if(this.size > this.maximumSize * 1.1) { return; }
+
         edibleNeighbours.forEach(organism => {
             let blood;
 
@@ -133,9 +138,9 @@ export class Organism {
                 blood = this.size / 2;
             }
 
-            blood *= 0.1;
+            blood *= 0.034;
 
-            if(this instanceof Herbivore) blood *= 0.6;
+            if(this instanceof Herbivore) blood *= 0.8;
 
             this.size += 0.95 * blood;
             organism.size -= blood;
@@ -144,7 +149,7 @@ export class Organism {
     }
 
     reproduce() {
-        if (this.size > this.maximumSize) { // Arbitrary reproduction threshold
+        if (this.age > 300 && this.size > this.maximumSize) { // Arbitrary reproduction threshold
             if(this.constructor.manager.reproduce(this)) this.size /= 2; // The parent loses size
         }        
     }
@@ -222,7 +227,7 @@ export class Herbivore extends Organism {
 
     move() {
         if(this.size > 60) this.size *= 0.986;
-        else this.size -= 0.038 + (0.012 * Math.log10(this.speed + 1)) + (0.006 * this.wiggleAmplitude);
+        else this.size -= 0.024 + (0.012 * Math.log10(this.speed + 1)) + (0.006 * this.wiggleAmplitude);
 
         if(this.size <= 3) {
             this.die();
@@ -236,7 +241,7 @@ export class Carnivore extends Organism {
 
     move() {
         if(this.size > 60) this.size *= 0.986;
-        else this.size -= 0.062 + (0.024 * Math.log10(this.speed + 1)) + (0.004 * this.wiggleAmplitude);
+        else this.size -= 0.032 + (0.018 * Math.log10(this.speed + 1)) + (0.004 * this.wiggleAmplitude);
 
         if(this.size <= 3) {
             this.die();
