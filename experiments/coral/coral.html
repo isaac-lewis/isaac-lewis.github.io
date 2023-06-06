@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <canvas id="fractalCanvas" width="1400" height="1100"></canvas>
+    <script>
+        const canvas = document.getElementById('fractalCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        function randBetween(a, b) {
+            return a + Math.random() * (b - a);
+        }
+
+        function randomColor({r, g, b}) {
+            return [
+                Math.floor(randBetween(r[0], r[1])),
+                Math.floor(randBetween(g[0], g[1])),
+                Math.floor(randBetween(b[0], b[1]))
+            ];
+        }
+
+        function arrayToRGB(arr) {
+            return `rgb(${arr.join(',')})`;
+        }
+
+        function drawSky() {
+            ctx.fillStyle = arrayToRGB([39, 145, 233]); 
+            ctx.fillRect(0, 0, canvas.width, canvas.height / 4.5);
+        }
+
+        function drawClouds() {
+            const cloudCount = Math.floor(randBetween(5, 20));
+            for (let i = 0; i < cloudCount; i++) {
+                const x = randBetween(0, canvas.width);
+                const y = randBetween(0, canvas.height / 4.5);
+                const size = randBetween(30, 70);
+                drawCloud(ctx, x, y, size);
+            }
+        }
+
+        function drawCloud(ctx, x, y, size) {
+            let radius = size / 1.5;
+
+    // Draw a series of circles to create a fluffy cloud effect
+            for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 20) {
+                let posX = x + radius * Math.cos(angle) * Math.random();
+                let posY = y + radius * Math.sin(angle) * Math.random();
+                let rad = size * (0.15 + 0.25 * Math.random());
+
+                let shade = randBetween(210, 235);
+                ctx.fillStyle = arrayToRGB([shade, shade, shade]);
+
+                ctx.beginPath();
+                ctx.arc(posX, posY, rad, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        function drawGround() {
+            ctx.fillStyle = arrayToRGB([29, 18, 6]); // dark brown RGB
+            ctx.fillRect(0, canvas.height / 4.5, canvas.width, canvas.height);
+
+            // Number of spots to draw
+            let numSpots = canvas.width * canvas.height / 20;
+
+            for (let i = 0; i < numSpots; i++) {
+                // Calculate random position and size for this spot
+                let spotSize = randBetween(3, 9);
+                let x = randBetween(0, canvas.width - spotSize);
+                let y = randBetween(canvas.height / 4.5, canvas.height - spotSize);
+
+                // Choose a random shade of lighter brown or green for this spot
+                let rnd = Math.random();
+                let color;
+                if(rnd < 0.85) color = arrayToRGB(randomColor({r: [29, 49], g: [8, 28], b: [0, 16]}));
+                else if(rnd < 0.96) color = arrayToRGB(randomColor({r: [20, 30], g: [45, 65], b: [10, 15]}));
+                else color = arrayToRGB(randomColor({r: [30, 40], g: [30, 40], b: [30, 40]}));
+
+                // Draw the spot
+                ctx.fillStyle = color;
+                ctx.fillRect(x, y, spotSize, spotSize);
+            }
+        }
+
+        function drawTrees() {
+            let rowCount = Math.floor(randBetween(6, 9));
+            let colCount = Math.floor(randBetween(9, 12));
+
+            let yPos = canvas.height / 4.5;
+
+            for (let j = rowCount - 1; j >= 0; j--) {
+                setTimeout(() => {
+                // Calculate the gap between rows and scale factor for tree sizes
+                    
+                    let scaleFactor = 1 - j / rowCount; // Trees get smaller in higher rows
+                    let rowGap = scaleFactor * (canvas.height * 1.05) / rowCount;
+                // Calculate the y-position for this row
+                    yPos += rowGap;
+
+                    let thisColCount = Math.round(colCount / scaleFactor);
+                    // Calculate the gap between trees in this row
+                    let colGap = canvas.width / (thisColCount + 1);
+
+                    for (let i = 0; i < thisColCount; i++) {
+                        setTimeout(() => {
+                            treeColor = arrayToRGB(randomColor({r: [55, 75], g: [25, 50], b: [10, 25]}));
+                            leafColor = arrayToRGB(randomColor({r: [30, 50], g: [50, 115], b: [10, 25]}));
+
+                            // Move the starting point to the appropriate position for this tree
+                            ctx.translate(0, yPos);
+
+                            // Draw the tree, adjusting size based on row
+                            drawLine(randBetween(0, canvas.width), i * (rowGap / thisColCount), Math.max(randBetween(15, 18), randBetween(70, 100) * scaleFactor), randBetween(0.15, 0.25), -Math.PI / 2, randBetween(0.05, 0.3), 14);
+                            // Move the starting point back to the original position
+                            ctx.translate(0, -yPos);
+                        }, i * (1700 / thisColCount));
+                    }
+                }, 1800 * (rowCount - j - 1));
+            }
+        }
+
+        function drawLine(x1, y1, len, chumpiness, angle, angleTweak, depth) {
+            if(len < 10 || depth <= 0 || angle > 0.4 || angle < -(Math.PI + 0.4))
+                return;
+
+            if(len < 15) {
+                ctx.lineWidth = len * chumpiness * 7;
+                ctx.strokeStyle = leafColor;
+            } else {
+                ctx.lineWidth = len * chumpiness;
+                ctx.strokeStyle = treeColor;
+            }
+            
+            var x2 = x1 + len * Math.cos(angle);
+            var y2 = y1 + len * Math.sin(angle);
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+
+            drawLine(x2, y2, len * randBetween(0.72, 0.85), chumpiness, angle - (Math.PI * angleTweak * randBetween(0.6, 1,4)), angleTweak, depth - 1);
+
+            drawLine(x2, y2, len * randBetween(0.72, 0.85), chumpiness, angle + (Math.PI * angleTweak * randBetween(0.6, 1.4)), angleTweak, depth - 1);
+        }
+
+        // Now that we've defined all our functions, we can call them to draw the scene.
+        drawSky();
+        drawClouds();
+        drawGround();
+        drawTrees();
+
+    </script>
+</body>
+</html>
